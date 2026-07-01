@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
-import {
-  WhatsAppButton,
-  LiveChatButton,
-} from "@/components/layout/floating-actions";
+import { WhatsAppButton } from "@/components/layout/floating-actions";
+import { ChatWidget } from "@/components/layout/chat-widget";
 import { SmoothScrollProvider } from "@/components/effects/smooth-scroll";
+import { ScrollProgress } from "@/components/effects/scroll-progress";
+import { CursorGlow } from "@/components/effects/cursor-glow";
+import { MergerBanner } from "@/components/layout/merger-banner";
 import { company } from "@/lib/constants";
 import "./globals.css";
 
@@ -71,11 +72,14 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen bg-background font-sans text-foreground antialiased">
         <SmoothScrollProvider>
+          <ScrollProgress />
+          <CursorGlow />
+          <MergerBanner />
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />
           <WhatsAppButton />
-          <LiveChatButton />
+          <ChatWidget />
         </SmoothScrollProvider>
       </body>
     </html>

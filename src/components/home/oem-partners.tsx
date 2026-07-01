@@ -11,30 +11,52 @@ const partners = [
   "Mitsubishi Electric",
   "Honeywell",
   "Emerson",
+  "Fuji Electric",
+  "Legrand",
+  "Eaton",
+  "Hager",
+  "Sprint Technology",
 ];
+
+function MarqueeRow({ reverse = false }: { reverse?: boolean }) {
+  return (
+    <div className="flex overflow-hidden">
+      <div
+        className="animate-scroll-logos flex shrink-0 items-center gap-12 pr-12"
+        style={reverse ? { animationDirection: "reverse" } : undefined}
+      >
+        {[...partners, ...partners].map((partner, i) => (
+          <span
+            key={`${partner}-${i}`}
+            className="whitespace-nowrap text-2xl font-bold tracking-tight text-iepci-navy/30 transition-colors hover:text-iepci-blue"
+          >
+            {partner}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export function OEMPartnerships() {
   return (
-    <section className="border-y border-iepci-gray-200 bg-white py-16">
+    <section className="overflow-hidden border-y border-iepci-gray-200 bg-white py-16">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading
           label="Partnerships"
-          title="OEM Partnerships"
-          description="Authorized integration partners with leading global automation and power equipment manufacturers."
+          title="OEM & Technology Partners"
+          description="Authorized integration partners with leading global automation and power equipment manufacturers — strengthened by the IEPCI–Proton merger."
         />
-
-        <div className="flex flex-wrap items-center justify-center gap-8 lg:gap-16">
-          {partners.map((partner, i) => (
-            <FadeIn key={partner} delay={i * 0.05}>
-              <div className="flex h-16 items-center justify-center rounded-xl px-8 transition-opacity hover:opacity-70">
-                <span className="text-xl font-bold tracking-tight text-iepci-navy/40 transition-colors hover:text-iepci-navy">
-                  {partner}
-                </span>
-              </div>
-            </FadeIn>
-          ))}
-        </div>
       </div>
+
+      <FadeIn>
+        <div className="relative space-y-6">
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-white to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-white to-transparent" />
+          <MarqueeRow />
+          <MarqueeRow reverse />
+        </div>
+      </FadeIn>
     </section>
   );
 }

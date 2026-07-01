@@ -70,6 +70,12 @@ export function HeroSection() {
     >
       <Hero3DScene />
 
+      {/* Aurora glow blobs */}
+      <div className="pointer-events-none absolute inset-0 z-[1]">
+        <div className="animate-aurora absolute left-[10%] top-[15%] h-[28rem] w-[28rem] rounded-full bg-iepci-blue/30 blur-[140px]" />
+        <div className="animate-aurora absolute right-[8%] top-[30%] h-96 w-96 rounded-full bg-iepci-accent/25 blur-[130px] [animation-delay:-6s]" />
+      </div>
+
       <motion.div
         ref={bgRef}
         style={{ y: bgY }}
@@ -109,6 +115,19 @@ export function HeroSection() {
         }}
         className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-center px-4 pb-32 pt-40 text-center lg:px-8"
       >
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="mb-6 inline-flex items-center gap-2 rounded-full border border-iepci-accent/30 bg-white/5 px-4 py-1.5 text-xs font-medium text-white/80 backdrop-blur-md"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-iepci-accent opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-iepci-accent" />
+          </span>
+          Proton Corporation Dubai is now part of IEPCI
+        </motion.div>
+
         <motion.p
           initial={{ opacity: 0, y: 20, rotateX: 20 }}
           animate={{ opacity: 1, y: 0, rotateX: 0 }}
@@ -123,13 +142,13 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 40, rotateX: 25 }}
           animate={{ opacity: 1, y: 0, rotateX: 0 }}
           transition={{ duration: 0.9, delay: 0.1 }}
-          className="max-w-4xl text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl"
+          className="max-w-4xl text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl"
           style={{
             transformStyle: "preserve-3d",
             textShadow: "0 20px 60px rgba(0,184,255,0.2)",
           }}
         >
-          <span className="text-gradient">{company.name}</span>
+          <span className="text-shimmer">{company.name}</span>
         </motion.h1>
 
         <motion.p
@@ -174,6 +193,22 @@ export function HeroSection() {
               </div>
             </TiltCard>
           ))}
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2 }}
+          className="mt-16 flex flex-col items-center gap-2 text-white/50"
+        >
+          <span className="text-[10px] uppercase tracking-[0.3em]">Scroll</span>
+          <span className="flex h-9 w-5 items-start justify-center rounded-full border border-white/30 p-1">
+            <motion.span
+              animate={{ y: [0, 12, 0] }}
+              transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+              className="h-1.5 w-1.5 rounded-full bg-iepci-accent"
+            />
+          </span>
         </motion.div>
       </motion.div>
 

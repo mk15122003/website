@@ -8,7 +8,7 @@ import { images } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: `Contact ${company.name} for electrical EPC, automation, and power engineering inquiries.`,
+  description: `Contact ${company.name} — offices in India, Dubai (Business Bay), UAE, and UK.`,
 };
 
 export default function ContactPage() {
@@ -24,8 +24,8 @@ export default function ContactPage() {
             Contact Us
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-white/70">
-            Get in touch with our team for project inquiries, technical support,
-            or partnership opportunities.
+            Reach our team across India, Dubai, UAE, and UK. We typically respond
+            within 24 hours.
           </p>
         </div>
       </section>
@@ -35,54 +35,75 @@ export default function ContactPage() {
           <div className="grid gap-16 lg:grid-cols-2">
             <div>
               <h2 className="text-2xl font-bold text-iepci-navy">
-                Get in Touch
+                Office Locations
               </h2>
               <p className="mt-4 text-iepci-gray-500">
-                Our team operates across India, UAE, and UK. We typically
-                respond to inquiries within 24 hours.
+                {company.mergerNote}
               </p>
 
               <div className="mt-8 space-y-6">
-                <a
-                  href={`mailto:${company.email}`}
-                  className="flex items-start gap-4 rounded-2xl border border-iepci-gray-200 p-4 transition-colors hover:border-iepci-blue"
-                >
-                  <Mail className="mt-0.5 h-5 w-5 text-iepci-blue" />
-                  <div>
-                    <p className="font-medium text-iepci-navy">Email</p>
-                    <p className="text-sm text-iepci-gray-500">
-                      {company.email}
-                    </p>
-                  </div>
-                </a>
-                {company.phones.map((p) => (
-                  <a
-                    key={p.number}
-                    href={`tel:${p.number.replace(/\s/g, "")}`}
-                    className="flex items-start gap-4 rounded-2xl border border-iepci-gray-200 p-4 transition-colors hover:border-iepci-blue"
+                {company.offices.map((office) => (
+                  <div
+                    key={office.name}
+                    className="rounded-2xl border border-iepci-gray-200 p-6"
                   >
-                    <Phone className="mt-0.5 h-5 w-5 text-iepci-blue" />
-                    <div>
-                      <p className="font-medium text-iepci-navy">{p.label}</p>
-                      <p className="text-sm text-iepci-gray-500">{p.number}</p>
-                    </div>
-                  </a>
-                ))}
-                <div className="flex items-start gap-4 rounded-2xl border border-iepci-gray-200 p-4">
-                  <MapPin className="mt-0.5 h-5 w-5 text-iepci-blue" />
-                  <div>
-                    <p className="font-medium text-iepci-navy">Offices</p>
-                    <p className="text-sm text-iepci-gray-500">
-                      {company.locations.join(" · ")}
+                    <p className="font-semibold text-iepci-navy">
+                      {office.name}
                     </p>
+                    {"address" in office && office.address && (
+                      <p className="mt-2 flex items-start gap-2 text-sm text-iepci-gray-500">
+                        <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-iepci-blue" />
+                        {office.address}
+                      </p>
+                    )}
+                    {"email" in office && office.email && (
+                      <a
+                        href={`mailto:${office.email}`}
+                        className="mt-2 flex items-center gap-2 text-sm text-iepci-blue hover:underline"
+                      >
+                        <Mail className="h-4 w-4" />
+                        {office.email}
+                      </a>
+                    )}
+                    {office.phones?.map((phone) => (
+                      <a
+                        key={phone}
+                        href={`tel:${phone.replace(/\s/g, "")}`}
+                        className="mt-1 flex items-center gap-2 text-sm text-iepci-gray-500 hover:text-iepci-blue"
+                      >
+                        <Phone className="h-4 w-4" />
+                        {phone}
+                      </a>
+                    ))}
                   </div>
+                ))}
+              </div>
+
+              <div className="mt-8">
+                <h3 className="mb-4 font-semibold text-iepci-navy">
+                  General Inquiries
+                </h3>
+                <div className="space-y-3">
+                  {company.emails.map((e) => (
+                    <a
+                      key={e.address}
+                      href={`mailto:${e.address}`}
+                      className="flex items-center gap-2 text-sm text-iepci-gray-500 hover:text-iepci-blue"
+                    >
+                      <Mail className="h-4 w-4" />
+                      <span>
+                        <strong className="text-iepci-navy">{e.label}:</strong>{" "}
+                        {e.address}
+                      </span>
+                    </a>
+                  ))}
                 </div>
               </div>
 
               <div className="mt-10 overflow-hidden rounded-2xl border border-iepci-gray-200">
                 <iframe
-                  title="IEPCI Office Location"
-                  src="https://maps.google.com/maps?q=Dubai,UAE&output=embed"
+                  title="IEPCI Dubai Office — Business Bay"
+                  src="https://maps.google.com/maps?q=The+Binary+by+Omniyat+Business+Bay+Dubai&output=embed"
                   width="100%"
                   height="300"
                   style={{ border: 0 }}
@@ -94,7 +115,7 @@ export default function ContactPage() {
             </div>
 
             <div className="rounded-2xl border border-iepci-gray-200 bg-white p-8 shadow-soft">
-              <ContactForm />
+              <ContactForm title="Send a Message" />
             </div>
           </div>
         </div>

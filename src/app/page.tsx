@@ -1,5 +1,7 @@
-import { HeroSection } from "@/components/home/hero";
+import { PremiumHero } from "@/components/home/premium-hero";
 import { CompanyOverview } from "@/components/home/company-overview";
+import { SolutionsOrbit } from "@/components/home/solutions-orbit";
+import { SolutionsShowcase } from "@/components/home/solutions-showcase";
 import { ServicesGrid } from "@/components/home/services-grid";
 import { IndustriesSection } from "@/components/home/industries";
 import { HorizontalScrollProjects } from "@/components/effects/horizontal-scroll-projects";
@@ -15,8 +17,10 @@ import { CTASection } from "@/components/home/cta-section";
 export default function HomePage() {
   return (
     <>
-      <HeroSection />
+      <PremiumHero />
       <CompanyOverview />
+      <SolutionsOrbit />
+      <SolutionsShowcase />
       <ServicesGrid />
       <IndustriesSection />
       <HorizontalScrollProjects />

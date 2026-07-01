@@ -120,3 +120,156 @@ body {
 .animate-float {
   animation: float 4s ease-in-out infinite;
 }
+
+/* ---- Premium motion utilities ---- */
+
+@keyframes aurora {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate3d(8%, -6%, 0) scale(1.25);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.7;
+  }
+}
+
+.animate-aurora {
+  animation: aurora 14s ease-in-out infinite;
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 22s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.text-shimmer {
+  background: linear-gradient(
+    100deg,
+    var(--iepci-blue) 20%,
+    var(--iepci-accent) 40%,
+    #ffffff 50%,
+    var(--iepci-accent) 60%,
+    var(--iepci-blue) 80%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 24px rgba(0, 184, 255, 0.25),
+      0 0 0 1px rgba(0, 184, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 60px rgba(0, 184, 255, 0.55),
+      0 0 0 1px rgba(0, 184, 255, 0.45);
+  }
+}
+
+.animate-glow {
+  animation: glow-pulse 3.5s ease-in-out infinite;
+}
+
+/* 3D rotating orbit ring */
+.orbit-stage {
+  perspective: 1600px;
+  perspective-origin: 50% 40%;
+}
+
+@keyframes orbit-spin {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+.orbit-ring {
+  transform-style: preserve-3d;
+  animation: orbit-spin 32s linear infinite;
+}
+
+.orbit-ring:hover {
+  animation-play-state: paused;
+}
+
+.orbit-card {
+  backface-visibility: hidden;
+}
+
+/* Scroll progress + cursor */
+.scroll-progress-bar {
+  background: linear-gradient(90deg, var(--iepci-blue), var(--iepci-accent));
+  transform-origin: 0%;
+}
+
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  border: 1.5px solid rgba(0, 184, 255, 0.7);
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+  will-change: transform;
+}
+
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--iepci-accent);
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor-glow,
+  .cursor-dot {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-aurora,
+  .animate-spin-slow,
+  .text-shimmer,
+  .animate-glow,
+  .orbit-ring,
+  .animate-float,
+  .animate-scroll-logos {
+    animation: none !important;
+  }
+}

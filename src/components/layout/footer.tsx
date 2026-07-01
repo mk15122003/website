@@ -1,138 +1,189 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { ArrowRight, Mail, MapPin, Phone } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { company } from "@/lib/constants";
 import { images } from "@/lib/images";
 import { services } from "@/data/services";
+import { solutionPages } from "@/data/solution-pages";
+
+const featuredSolutionSlugs = [
+  "electrical",
+  "substation",
+  "automation",
+  "instrumentation",
+  "package-substation",
+  "hydro-powerplant",
+  "solar-system",
+  "fuji-electric",
+];
 
 const footerLinks = {
   company: [
     { href: "/about", label: "About Us" },
     { href: "/projects", label: "Projects" },
+    { href: "/industries", label: "Industries" },
     { href: "/careers", label: "Careers" },
     { href: "/blog", label: "Knowledge Center" },
+    { href: "/contact", label: "Contact" },
   ],
+  solutions: featuredSolutionSlugs
+    .map((slug) => solutionPages.find((p) => p.slug === slug))
+    .filter((p): p is (typeof solutionPages)[number] => Boolean(p))
+    .map((p) => ({
+      href: `/${p.slug}`,
+      label: p.title.replace(" Solutions", ""),
+    })),
   services: services.slice(0, 6).map((s) => ({
     href: `/services/${s.slug}`,
     label: s.title,
   })),
-  support: [
-    { href: "/contact", label: "Contact" },
-    { href: "/get-a-quote", label: "Get a Quote" },
-    { href: "/industries", label: "Industries" },
-  ],
 };
+
+function LinkColumn({
+  title,
+  links,
+  footer,
+}: {
+  title: string;
+  links: { href: string; label: string }[];
+  footer?: { href: string; label: string };
+}) {
+  return (
+    <div>
+      <h4 className="mb-5 text-sm font-semibold uppercase tracking-wider text-white">
+        {title}
+      </h4>
+      <ul className="space-y-3 text-sm text-white/60">
+        {links.map((l) => (
+          <li key={l.href}>
+            <Link href={l.href} className="transition-colors hover:text-iepci-accent">
+              {l.label}
+            </Link>
+          </li>
+        ))}
+        {footer && (
+          <li>
+            <Link
+              href={footer.href}
+              className="inline-flex items-center gap-1 font-medium text-iepci-accent hover:underline"
+            >
+              {footer.label} <ArrowRight className="h-3 w-3" />
+            </Link>
+          </li>
+        )}
+      </ul>
+    </div>
+  );
+}
 
 export function Footer() {
   return (
     <footer className="bg-iepci-navy text-white">
-      <div className="mx-auto max-w-7xl px-4 py-16 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-5">
-          <div className="lg:col-span-2">
-            <Image
-              src={images.logo}
-              alt="IEPCI"
-              width={56}
-              height={56}
-              className="mb-4 h-12 w-auto brightness-0 invert"
-            />
-            <p className="mb-6 max-w-sm text-sm leading-relaxed text-white/70">
-              One stop solution for all your Power and Automation needs.
-              Delivering mission-critical electrical solutions across India,
-              UAE, and UK since 2003.
+      {/* Newsletter band */}
+      <div className="border-b border-white/10">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 px-4 py-10 lg:flex-row lg:items-center lg:px-8">
+          <div>
+            <h3 className="text-xl font-semibold text-white">
+              Stay ahead with engineering insights
+            </h3>
+            <p className="mt-1 text-sm text-white/60">
+              Project updates and industry know-how from the IEPCI group — no spam.
             </p>
-            <div className="space-y-3 text-sm text-white/80">
+          </div>
+          <form className="flex w-full max-w-md gap-2">
+            <Input
+              type="email"
+              placeholder="Your email address"
+              className="border-white/20 bg-white/10 text-white placeholder:text-white/50"
+            />
+            <Button variant="primary" size="sm" type="submit">
+              Subscribe
+            </Button>
+          </form>
+        </div>
+      </div>
+
+      {/* Main grid */}
+      <div className="mx-auto max-w-7xl px-4 py-16 lg:px-8">
+        <div className="grid gap-12 lg:grid-cols-12">
+          {/* Brand + contact */}
+          <div className="lg:col-span-4">
+            <Link
+              href="/"
+              className="inline-flex items-center rounded-xl bg-white px-4 py-3 shadow-soft"
+            >
+              <Image
+                src={images.logo}
+                alt={company.name}
+                width={150}
+                height={44}
+                className="h-9 w-auto"
+              />
+            </Link>
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/60">
+              {company.oneStopTagline}. Delivering mission-critical electrical,
+              power, and automation solutions since {company.founded}.
+            </p>
+            <div className="mt-6 space-y-2.5 text-sm text-white/70">
               <a
                 href={`mailto:${company.email}`}
-                className="flex items-center gap-2 hover:text-iepci-accent"
+                className="flex items-center gap-2.5 hover:text-iepci-accent"
               >
-                <Mail className="h-4 w-4" /> {company.email}
+                <Mail className="h-4 w-4 shrink-0 text-iepci-accent" />
+                {company.email}
               </a>
-              {company.phones.map((p) => (
-                <a
-                  key={p.number}
-                  href={`tel:${p.number.replace(/\s/g, "")}`}
-                  className="flex items-center gap-2 hover:text-iepci-accent"
-                >
-                  <Phone className="h-4 w-4" /> {p.label}: {p.number}
-                </a>
-              ))}
-              <p className="flex items-center gap-2">
-                <MapPin className="h-4 w-4" /> {company.locations.join(" · ")}
+              <p className="flex items-start gap-2.5">
+                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-iepci-accent" />
+                <span>
+                  India +91 7859984453 · UAE +971 559973252 · UK +44 7487535352
+                </span>
+              </p>
+              <p className="flex items-center gap-2.5">
+                <MapPin className="h-4 w-4 shrink-0 text-iepci-accent" />
+                {company.locations.join(" · ")}
               </p>
             </div>
           </div>
 
-          <div>
-            <h4 className="mb-4 font-semibold">Company</h4>
-            <ul className="space-y-2 text-sm text-white/70">
-              {footerLinks.company.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="hover:text-iepci-accent">
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          {/* Link columns */}
+          <div className="lg:col-span-2">
+            <LinkColumn title="Company" links={footerLinks.company} />
           </div>
-
-          <div>
-            <h4 className="mb-4 font-semibold">Services</h4>
-            <ul className="space-y-2 text-sm text-white/70">
-              {footerLinks.services.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="hover:text-iepci-accent">
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <div className="lg:col-span-3">
+            <LinkColumn
+              title="Solutions"
+              links={footerLinks.solutions}
+              footer={{ href: "/solutions", label: "View all solutions" }}
+            />
           </div>
-
-          <div>
-            <h4 className="mb-4 font-semibold">Newsletter</h4>
-            <p className="mb-4 text-sm text-white/70">
-              Get engineering insights and project updates.
-            </p>
-            <form className="flex gap-2">
-              <Input
-                type="email"
-                placeholder="Your email"
-                className="border-white/20 bg-white/10 text-white placeholder:text-white/50"
-              />
-              <Button variant="primary" size="sm" type="submit">
-                Join
-              </Button>
-            </form>
-            <div className="mt-6 flex gap-4">
-              {Object.entries(company.social).map(([name, url]) => (
-                <a
-                  key={name}
-                  href={url}
-                  className="text-sm capitalize text-white/60 hover:text-iepci-accent"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {name}
-                </a>
-              ))}
-            </div>
+          <div className="lg:col-span-3">
+            <LinkColumn
+              title="Services"
+              links={footerLinks.services}
+              footer={{ href: "/services", label: "All services" }}
+            />
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-sm text-white/50 sm:flex-row">
+        {/* Bottom bar */}
+        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-sm text-white/50 sm:flex-row">
           <p>
             © {new Date().getFullYear()} {company.name}. All rights reserved.
           </p>
-          <div className="flex gap-6">
-            <Link href="/contact" className="hover:text-white">
-              Privacy Policy
-            </Link>
-            <Link href="/contact" className="hover:text-white">
-              Terms of Service
-            </Link>
+          <div className="flex items-center gap-5">
+            {Object.entries(company.social).map(([name, url]) => (
+              <a
+                key={name}
+                href={url}
+                className="capitalize text-white/50 transition-colors hover:text-iepci-accent"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {name}
+              </a>
+            ))}
           </div>
         </div>
       </div>
