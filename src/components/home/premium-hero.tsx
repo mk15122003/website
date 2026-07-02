@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   motion,
@@ -37,8 +37,131 @@ const reveal = {
   show: { opacity: 1, y: 0 },
 };
 
+function TrustStrip() {
+  return (
+    <div className="relative z-10 bg-white py-5">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-8 gap-y-3 px-4">
+        {features.map((f) => (
+          <div
+            key={f}
+            className="flex items-center gap-2 text-sm text-iepci-gray-500"
+          >
+            <CheckCircle2 className="h-4 w-4 text-iepci-blue" />
+            {f}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Lightweight, single-screen hero for phones — no heavy 3D canvas and no
+ * scroll-jacking, which perform and look poor on mobile.
+ */
+function MobileHero() {
+  return (
+    <>
+      <section className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden bg-iepci-black px-6 pb-16 pt-32">
+        {/* Aurora glow (contained to avoid horizontal overflow) */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="animate-aurora absolute -right-20 top-20 h-72 w-72 rounded-full bg-iepci-blue/25 blur-[100px]" />
+          <div className="animate-aurora absolute -left-16 bottom-10 h-64 w-64 rounded-full bg-iepci-accent/20 blur-[90px] [animation-delay:-6s]" />
+        </div>
+        {/* Perspective grid floor */}
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 opacity-[0.1]"
+          style={{
+            backgroundImage: `linear-gradient(rgba(0,184,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(0,184,255,0.6) 1px, transparent 1px)`,
+            backgroundSize: "40px 40px",
+            transform: "perspective(300px) rotateX(65deg)",
+            transformOrigin: "center bottom",
+            maskImage: "linear-gradient(to top, black, transparent)",
+          }}
+        />
+
+        <motion.div
+          initial="hidden"
+          animate="show"
+          transition={{ staggerChildren: 0.1 }}
+          className="relative z-10"
+        >
+          <motion.div
+            variants={reveal}
+            className="mb-5 inline-flex items-center gap-2 rounded-full border border-iepci-accent/30 bg-white/5 px-3 py-1.5 text-[11px] font-medium text-white/80 backdrop-blur-md"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-iepci-accent opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-iepci-accent" />
+            </span>
+            Proton Dubai is now part of IEPCI
+          </motion.div>
+          <motion.h1
+            variants={reveal}
+            className="text-5xl font-bold leading-tight"
+          >
+            <span className="text-shimmer">{company.shortName}</span>
+          </motion.h1>
+          <motion.p
+            variants={reveal}
+            className="mt-4 text-base text-white/70"
+          >
+            {company.tagline}
+          </motion.p>
+          <motion.div variants={reveal} className="mt-8 flex flex-col gap-3">
+            <Button asChild size="lg">
+              <Link href="/get-a-quote">
+                Get a Quote <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+            <Button asChild variant="secondary" size="lg">
+              <Link href="/solutions">Explore Solutions</Link>
+            </Button>
+          </motion.div>
+
+          <motion.div
+            variants={reveal}
+            className="mt-10 grid grid-cols-2 gap-3"
+          >
+            {stats.map((stat) => (
+              <div
+                key={stat.label}
+                className="glass rounded-2xl p-4 text-center"
+              >
+                <p className="text-2xl font-bold text-white">
+                  <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                </p>
+                <p className="mt-1 text-[11px] text-white/60">{stat.label}</p>
+              </div>
+            ))}
+          </motion.div>
+        </motion.div>
+      </section>
+      <TrustStrip />
+    </>
+  );
+}
+
 export function PremiumHero() {
+  const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const update = () => setIsDesktop(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  // Until we know the viewport (and on mobile), render the lightweight hero.
+  // This also keeps the scroll-linked ref off the page unless it's mounted.
+  if (!isDesktop) return <MobileHero />;
+  return <DesktopHero />;
+}
+
+function DesktopHero() {
   const sectionRef = useRef<HTMLElement>(null);
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
@@ -214,20 +337,7 @@ export function PremiumHero() {
         </motion.div>
       </div>
 
-      {/* Trust strip */}
-      <div className="relative z-10 bg-white py-5">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-8 gap-y-3 px-4">
-          {features.map((f) => (
-            <div
-              key={f}
-              className="flex items-center gap-2 text-sm text-iepci-gray-500"
-            >
-              <CheckCircle2 className="h-4 w-4 text-iepci-blue" />
-              {f}
-            </div>
-          ))}
-        </div>
-      </div>
+      <TrustStrip />
     </section>
   );
 }
