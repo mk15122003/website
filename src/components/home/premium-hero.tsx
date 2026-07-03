@@ -175,7 +175,7 @@ function DesktopHero() {
   const glowScale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.25, 1]);
 
   return (
-    <section ref={sectionRef} className="relative bg-iepci-black">
+    <section ref={sectionRef} className="relative isolate bg-iepci-black">
       {/* Sticky visual layer: the glossy object stays pinned while panels scroll over it */}
       <div className="sticky top-0 -mb-[100vh] h-screen overflow-hidden">
         <motion.div

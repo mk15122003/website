@@ -101,20 +101,22 @@ export function ProcessTimeline3D() {
 
         <div
           ref={containerRef}
-          className="grid grid-cols-3 gap-3 sm:grid-cols-3 md:flex md:flex-row md:gap-3"
+          className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:flex md:flex-row md:gap-3"
           style={{ perspective: "1200px", transformStyle: "preserve-3d" }}
         >
           {steps.map((step, i) => (
             <div
               key={step}
               data-step
-              className="flex-1 rounded-2xl border border-iepci-gray-200/60 bg-white p-5 shadow-soft"
+              className="flex flex-1 items-center gap-3 rounded-2xl border border-iepci-gray-200/60 bg-white p-3 shadow-soft md:flex-col md:items-start md:p-5"
               style={{ transformStyle: "preserve-3d" }}
             >
-              <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-iepci-blue to-iepci-accent text-sm font-bold text-white shadow-lg">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-iepci-blue to-iepci-accent text-xs font-bold text-white shadow-lg md:mb-3 md:h-12 md:w-12 md:text-sm">
                 {String(i + 1).padStart(2, "0")}
               </div>
-              <p className="text-sm font-semibold text-iepci-navy">{step}</p>
+              <p className="text-sm font-semibold leading-tight text-iepci-navy">
+                {step}
+              </p>
             </div>
           ))}
         </div>

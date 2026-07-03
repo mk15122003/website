@@ -49,7 +49,7 @@ export function CompanyOverview() {
   }, []);
 
   return (
-    <section className="overflow-hidden py-14 md:py-24" style={{ perspective: "1200px" }}>
+    <section className="relative z-10 overflow-hidden bg-slate-50 py-14 md:py-24" style={{ perspective: "1200px" }}>
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <div className="grid items-center gap-16 lg:grid-cols-2">
           <div
