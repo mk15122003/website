@@ -9,7 +9,7 @@ import { services } from "@/data/services";
 export function ServicesGrid() {
   return (
     <section
-      className="bg-iepci-gray-100/50 py-24"
+      className="bg-iepci-gray-100/50 py-14 md:py-24"
       style={{ perspective: "1200px" }}
     >
       <div className="mx-auto max-w-7xl px-4 lg:px-8">

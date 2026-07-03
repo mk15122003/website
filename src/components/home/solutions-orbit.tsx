@@ -15,7 +15,7 @@ export function SolutionsOrbit() {
   const angle = 360 / count;
 
   return (
-    <section className="relative overflow-hidden bg-iepci-black py-28">
+    <section className="relative overflow-hidden bg-iepci-black py-16 md:py-28">
       {/* aurora glow */}
       <div className="pointer-events-none absolute inset-0">
         <div className="animate-aurora absolute -left-32 top-10 h-96 w-96 rounded-full bg-iepci-blue/30 blur-[120px]" />

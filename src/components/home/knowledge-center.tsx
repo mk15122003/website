@@ -10,7 +10,7 @@ import { iepciImage } from "@/lib/images";
 
 export function KnowledgeCenter() {
   return (
-    <section className="py-24">
+    <section className="py-14 md:py-24">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading
           label="Knowledge Center"

@@ -34,7 +34,7 @@ const certifications = [
 
 export function Certifications() {
   return (
-    <section className="bg-iepci-gray-100/50 py-24">
+    <section className="bg-iepci-gray-100/50 py-14 md:py-24">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading
           label="Compliance"

@@ -54,7 +54,7 @@ const features = [
 
 export function WhyChooseUs() {
   return (
-    <section className="py-24" style={{ perspective: "1200px" }}>
+    <section className="py-14 md:py-24" style={{ perspective: "1200px" }}>
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <ScrollReveal3D>
           <SectionHeading

@@ -53,7 +53,7 @@ export function HorizontalScrollProjects() {
     >
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_50%,rgba(46,91,255,0.15),transparent_60%)]" />
 
-      <div className="relative mx-auto max-w-7xl px-4 py-24 lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-4 py-14 lg:px-8 lg:py-24">
         <SectionHeading
           label="Portfolio"
           title="Featured Projects"
@@ -62,9 +62,10 @@ export function HorizontalScrollProjects() {
         />
       </div>
 
+      <div className="overflow-x-auto pb-14 lg:overflow-x-visible lg:pb-0 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       <div
         ref={trackRef}
-        className="flex gap-8 px-4 pb-24 lg:px-8"
+        className="flex gap-5 px-4 pb-4 sm:gap-8 lg:px-8 lg:pb-24"
         style={{ width: "max-content" }}
       >
         {displayProjects.map((project, i) => (
@@ -122,6 +123,7 @@ export function HorizontalScrollProjects() {
             <ArrowRight className="mt-2 h-6 w-6 text-iepci-accent" />
           </Link>
         </div>
+      </div>
       </div>
     </section>
   );

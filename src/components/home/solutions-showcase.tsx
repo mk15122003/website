@@ -11,7 +11,10 @@ import { iepciImage } from "@/lib/images";
 
 export function SolutionsShowcase() {
   return (
-    <section className="bg-white py-24" style={{ perspective: "1200px" }}>
+    <section
+      className="hidden bg-white py-14 md:block md:py-24"
+      style={{ perspective: "1200px" }}
+    >
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <ScrollReveal3D>
           <SectionHeading

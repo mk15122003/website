@@ -38,7 +38,7 @@ export function Testimonials() {
     setCurrent((c) => (c - 1 + testimonials.length) % testimonials.length);
 
   return (
-    <section className="bg-iepci-navy py-24">
+    <section className="bg-iepci-navy py-14 md:py-24">
       <div className="mx-auto max-w-4xl px-4 lg:px-8">
         <SectionHeading
           label="Testimonials"

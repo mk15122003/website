@@ -47,7 +47,7 @@ export function IndustriesSection() {
   }, []);
 
   return (
-    <section className="overflow-hidden py-24" style={{ perspective: "1200px" }}>
+    <section className="overflow-hidden py-14 md:py-24" style={{ perspective: "1200px" }}>
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <ScrollReveal3D>
           <SectionHeading

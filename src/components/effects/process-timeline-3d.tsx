@@ -91,7 +91,7 @@ export function ProcessTimeline3D() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="overflow-hidden py-24">
+    <section ref={sectionRef} className="overflow-hidden py-14 md:py-24">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading
           label="Our Process"
@@ -101,7 +101,7 @@ export function ProcessTimeline3D() {
 
         <div
           ref={containerRef}
-          className="flex flex-col gap-4 md:flex-row md:gap-3"
+          className="grid grid-cols-3 gap-3 sm:grid-cols-3 md:flex md:flex-row md:gap-3"
           style={{ perspective: "1200px", transformStyle: "preserve-3d" }}
         >
           {steps.map((step, i) => (
